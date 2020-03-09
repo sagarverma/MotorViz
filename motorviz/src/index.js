@@ -1,15 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Car from './App.js';
 
-class Garage extends React.Component {
-  render () {
+
+class Container extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {show: true};
+  }
+  delHeader = () => {
+    this.setState({show: false});
+  }
+  render() {
+    let myheader;
+    if (this.state.show) {
+      myheader = <Child />;
+    };
     return (
       <div>
-        <h1>Who lives in my Garage?</h1>
-      <Car />
+      {myheader}
+      <button type="button" onClick={this.delHeader}>Delete Header</button>
       </div>
     );
   }
 }
-ReactDOM.render(<Garage/>, document.getElementById('root'));
+
+class Child extends React.Component {
+  componentWillUnmount() {
+    alert("The component named Header is about to be unmounted.");
+  }
+  render () {
+    return (
+      <h1>Hello World!</h1>
+    );
+  }
+}
+
+ReactDOM.render(<Container />, document.getElementById('root'));

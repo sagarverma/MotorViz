@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class Car extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       color: "black",
       brand: 'maruti',
@@ -11,8 +11,8 @@ class Car extends React.Component {
       year: '2014'
     };
   }
-  changeColor = () => {
-    this.setState({color: "blue"});
+  delHeader = () => {
+    this.setState({show: false});
   }
   render () {
     return (
@@ -23,10 +23,7 @@ class Car extends React.Component {
           {this.state.model} &nbsp;
           from {this.state.year}.
         </p>
-        <button
-          type="button"
-          onClick={this.changeColor}
-        >Change color</button>
+        <button type="button" onClick={this.delHeader}>Delete Header</button>
       </div>
     );
   }
