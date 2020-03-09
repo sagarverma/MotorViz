@@ -34,8 +34,14 @@ class MyForm extends React.Component {
     this.setState({[nam]: val});
   }
   render() {
+    const mystyle = {
+      color: "Blue",
+      backgroundcolor: "DodgerBlue",
+      padding: "10px",
+      fontFamily: "Arial"
+    };
     return (
-        <form onSubmit={this.mySubmitHandler}>
+        <form onSubmit={this.mySubmitHandler} style={mystyle}>
         <h1>Hello {this.state.username} {this.state.age}</h1>
         <textarea value={this.state.description} />
         <p>Enter your name:</p>
