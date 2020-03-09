@@ -2,37 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-class Container extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {show: true};
-  }
-  delHeader = () => {
-    this.setState({show: false});
+class Football extends React.Component {
+  shoot = (a, b) => {
+    alert(b.type);
   }
   render() {
-    let myheader;
-    if (this.state.show) {
-      myheader = <Child />;
-    };
     return (
-      <div>
-      {myheader}
-      <button type="button" onClick={this.delHeader}>Delete Header</button>
-      </div>
+      <button onClick={(ev) => this.shoot("Goal", ev)}>Take the shot!</button>
     );
   }
 }
 
-class Child extends React.Component {
-  componentWillUnmount() {
-    alert("The component named Header is about to be unmounted.");
-  }
-  render () {
-    return (
-      <h1>Hello World!</h1>
-    );
-  }
-}
-
-ReactDOM.render(<Container />, document.getElementById('root'));
+ReactDOM.render(<Football />, document.getElementById('root'));
