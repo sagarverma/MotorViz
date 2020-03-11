@@ -1,63 +1,77 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 
+import Reference from './reference.js';
+import Simulated from './simulated.js';
 
-class Quantity extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            label_x: "",
-            label_y: "",
-            domain_x: [],
-            domain_y: [],
-            data: {}
-        }
-    }
-    render() {
-        return (
-            <VictoryChart
-                theme={VictoryTheme.material}
-                domainPadding={20}
-            >
-            <VictoryAxis crossAxis
-                domain={this.state.domain_x}
-                theme={VictoryTheme.material}
-                label={this.state.label_x}
-                style={{axisLabel: {fontSize: 10, padding: 30}}}
-            />
-            <VictoryAxis dependentAxis crossAxis
-                domain={this.state.domain_y}
-                theme={VictoryTheme.material}
-                label={this.state.label_y}
-                style={{axisLabel: {fontSize: 10, padding: 30}}}
-            />
-            <VictoryLine
-                data={this.state.data}
-            />
-            </VictoryChart>
-        )
-    }
-}
-
-const data = [
+const ref_speed = [
   {x: 0, y: 0},
   {x: 1, y: 0},
   {x: 1.5, y: 50},
   {x: 3, y: 50}
 ];
 
-class App extends React.Component {
-  render() {
-    return (
-      <table>
-        <tr>
-            <td><Quantity label_x="Speed (Hz)" label_y="Time (s)" domain_x={[0, 4]} domain_y={[0, 50]} data={data}/></td>
-            <td> </td>
-        </tr>
-      </table>
-    )
-  }
-}
+const ref_torque = [
+  {x: 0, y: 100},
+  {x: 1, y: 100},
+  {x: 1.5, y: 100},
+  {x: 3, y: 100}
+];
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const sim_speed = [
+  {x: 0, y: 0},
+  {x: 1, y: 0},
+  {x: 1.5, y: 50},
+  {x: 3, y: 50}
+];
+
+const sim_torque = [
+  {x: 0, y: 100},
+  {x: 1, y: 100},
+  {x: 1.5, y: 100},
+  {x: 3, y: 100}
+];
+
+const sim_current_d = [
+  {x: 0, y: 100},
+  {x: 1, y: 100},
+  {x: 1.5, y: 100},
+  {x: 3, y: 100}
+];
+
+const sim_current_q = [
+  {x: 0, y: 0},
+  {x: 1, y: 0},
+  {x: 1.5, y: 50},
+  {x: 3, y: 50}
+];
+
+const sim_voltage_d = [
+  {x: 0, y: 100},
+  {x: 1, y: 100},
+  {x: 1.5, y: 100},
+  {x: 3, y: 100}
+];
+
+const sim_voltage_q = [
+  {x: 0, y: 0},
+  {x: 1, y: 0},
+  {x: 1.5, y: 50},
+  {x: 3, y: 50}
+];
+
+const sim_statorpuls = [
+  {x: 0, y: 100},
+  {x: 1, y: 100},
+  {x: 1.5, y: 100},
+  {x: 3, y: 100}
+];
+
+// ReactDOM.render(<Reference speed={ref_speed} torque={ref_torque}
+//                            time_domain={[0, 4]} speed_domain={[0 ,60]} torque_domain={[0, 120]}/>, document.getElementById("root"));
+ReactDOM.render(<Simulated speed={sim_speed} torque={sim_torque}
+                           current_d={sim_current_d} current_q={sim_current_q}
+                           voltage_d={sim_voltage_d} voltage_q={sim_voltage_q}
+                           statorPuls={sim_statorpuls} time_domain={[0, 4]}
+                           speed_domain={[0, 80]} torque_domain={[0, 120]}
+                           current_domain={[0, 100]} voltage_domain={[0, 100]}/>, document.getElementById("root"));
