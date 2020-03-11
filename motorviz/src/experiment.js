@@ -11,13 +11,25 @@ class ExperimentConfig extends React.Component {
       static_duration: [],
       ramp_range: [],
       simulate: false,
-      integral: true,
-
-      step: 1,
-      torque_steps: [],
-      speed_steps: [],
-      ramps: []
+      integral: false
     };
+  }
+  submitConfig = (event) => {
+    event.preventDefault();
+    const data = new FormData();
+    data.append('torque_range', this.state.torque_range);
+    data.append('speed_range', this.state.speed_range);
+    data.append('static_states', this.state.static_states);
+    data.append('static_duration', this.state.static_duration);
+    data.append('ramp_range', this.state.ramp_range);
+    data.append('simulate', this.state.simulate);
+    data.append('integral', this.state.simulate);
+
+    console.log(data);
+    fetch('/setconfig', {
+      method: 'POST',
+      body: data,
+    });
   }
   configure = (event) => {
     let nam = event.target.name;
@@ -25,14 +37,14 @@ class ExperimentConfig extends React.Component {
     this.setState({[nam]: val});
   }
   componentDidMount() {
-    fetch('/config')
+    fetch('/getconfig')
       .then(res => res.json())
       .then(data => this.setState({
-          torque_range: data.torque_range[0],
-          speed_range: data.speed_range[0],
-          static_states: data.static_states[0],
-          static_duration: data.static_duration[0],
-          ramp_range: data.ramp_range[0],
+          torque_range: data.torque_range,
+          speed_range: data.speed_range,
+          static_states: data.static_states,
+          static_duration: data.static_duration,
+          ramp_range: data.ramp_range,
           simulate: data.simulate,
           integral: data.integral
         })
@@ -40,7 +52,7 @@ class ExperimentConfig extends React.Component {
     }
     render() {
       return (
-        <form>
+        <form onSubmit={this.submitConfig}>
           <table>
             <tr>
               <td><label>Torque range </label></td>
@@ -90,7 +102,7 @@ class ExperimentConfig extends React.Component {
              <tr>
               <td><label>Simulate </label></td>
               <td><input
-                type='radio'
+                type='checkbox'
                 name='simulate'
                 value={this.state.simulate}
                 onChange={this.configure}
@@ -99,7 +111,7 @@ class ExperimentConfig extends React.Component {
               <tr>
                 <td><label>Integral </label></td>
                 <td><input
-                  type='radio'
+                  type='checkbox'
                   name='integral'
                   value={this.state.integral}
                   onChange={this.configure}
