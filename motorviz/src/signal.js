@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel } from 'victory';
 
 class Quantity extends React.Component {
@@ -180,10 +179,10 @@ class TwoQuantities extends React.Component {
                 theme={VictoryTheme.material}
                 domainPadding={20}
             >
-            <VictoryLabel x={200} y={60} style={styles.labelOne}
+            <VictoryLabel x={200} y={20} style={styles.labelOne}
                 text={this.state.legend_one}
             />
-            <VictoryLabel x={200} y={80} style={styles.labelTwo}
+            <VictoryLabel x={200} y={40} style={styles.labelTwo}
                 text={this.state.legend_two}
             />
             <VictoryAxis crossAxis
