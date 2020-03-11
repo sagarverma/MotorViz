@@ -1,5 +1,6 @@
 import React from 'react';
-import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel } from 'victory';
+import { VictoryLine, VictoryChart, VictoryAxis,
+         VictoryTheme, VictoryLabel, VictoryZoomContainer } from 'victory';
 
 class Quantity extends React.Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class Quantity extends React.Component {
             <VictoryChart
                 theme={VictoryTheme.material}
                 domainPadding={20}
+                containerComponent={<VictoryZoomContainer />}
             >
             <VictoryAxis crossAxis
                 domain={this.state.domain_x}
@@ -178,6 +180,7 @@ class TwoQuantities extends React.Component {
             <VictoryChart
                 theme={VictoryTheme.material}
                 domainPadding={20}
+                containerComponent={<VictoryZoomContainer />}
             >
             <VictoryLabel x={200} y={20} style={styles.labelOne}
                 text={this.state.legend_one}
