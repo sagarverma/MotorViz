@@ -20,11 +20,9 @@ class ExperimentConfig extends React.Component {
     };
   }
   configure = (event) => {
-    event.persist();
-    console.log(event);
-    // let nam = event.traget.name;
+    let nam = event.target.name;
     let val = event.target.value;
-    // this.setState({[nam]: val});
+    this.setState({[nam]: val});
   }
   componentDidMount() {
     fetch('/config')
