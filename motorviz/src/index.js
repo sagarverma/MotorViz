@@ -71,11 +71,11 @@ const sim_statorpuls = [
 
 // ReactDOM.render(<Reference speed={ref_speed} torque={ref_torque}
 //                            time_domain={[0, 4]} speed_domain={[0 ,60]} torque_domain={[0, 120]}/>, document.getElementById("root"));
-// ReactDOM.render(<Simulated speed={sim_speed} torque={sim_torque}
-//                            current_d={sim_current_d} current_q={sim_current_q}
-//                            voltage_d={sim_voltage_d} voltage_q={sim_voltage_q}
-//                            statorPuls={sim_statorpuls} time_domain={[0, 4]}
-//                            speed_domain={[0, 80]} torque_domain={[0, 120]}
-//                            current_domain={[0, 100]} voltage_domain={[0, 100]}/>, document.getElementById("root"));
+ReactDOM.render(<Simulated speed={sim_speed} torque={sim_torque}
+                           current_d={sim_current_d} current_q={sim_current_q}
+                           voltage_d={sim_voltage_d} voltage_q={sim_voltage_q}
+                           statorPuls={sim_statorpuls} time_domain={[0, 4]}
+                           speed_domain={[0, 80]} torque_domain={[0, 120]}
+                           current_domain={[0, 100]} voltage_domain={[0, 100]}/>, document.getElementById("root"));
 
-ReactDOM.render(<ExperimentConfig />, document.getElementById("root"));
+// ReactDOM.render(<ExperimentConfig />, document.getElementById("root"));

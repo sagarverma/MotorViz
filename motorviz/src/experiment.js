@@ -16,24 +16,16 @@ class ExperimentConfig extends React.Component {
   }
   submitConfig = (event) => {
     event.preventDefault();
-    const data = new FormData();
-    data.append('torque_range', this.state.torque_range);
-    data.append('speed_range', this.state.speed_range);
-    data.append('static_states', this.state.static_states);
-    data.append('static_duration', this.state.static_duration);
-    data.append('ramp_range', this.state.ramp_range);
-    data.append('simulate', this.state.simulate);
-    data.append('integral', this.state.simulate);
-
-    console.log(data);
     fetch('/setconfig', {
       method: 'POST',
-      body: data,
+      body: JSON.stringify(this.state),
+      headers: {'Content-Type': 'application/json'}
     });
   }
   configure = (event) => {
     let nam = event.target.name;
     let val = event.target.value;
+    console.log(nam, val);
     this.setState({[nam]: val});
   }
   componentDidMount() {
@@ -102,7 +94,7 @@ class ExperimentConfig extends React.Component {
              <tr>
               <td><label>Simulate </label></td>
               <td><input
-                type='checkbox'
+                type='radio'
                 name='simulate'
                 value={this.state.simulate}
                 onChange={this.configure}
@@ -111,7 +103,7 @@ class ExperimentConfig extends React.Component {
               <tr>
                 <td><label>Integral </label></td>
                 <td><input
-                  type='checkbox'
+                  type='radio'
                   name='integral'
                   value={this.state.integral}
                   onChange={this.configure}
