@@ -31,6 +31,7 @@ class ExperimentConfig extends React.Component {
     let val = event.target.value;
     console.log(nam, val);
     this.setState({[nam]: val});
+    //validation and strong alert, also if correct parse it to proper format
   }
   componentDidMount() {
     fetch('/getconfig')
