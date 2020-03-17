@@ -11,7 +11,11 @@ class ExperimentConfig extends React.Component {
       static_duration: [],
       ramp_range: [],
       simulate: false,
-      integral: false
+      integral: false,
+      step: 1,
+      torque_steps: [],
+      speed_steps: [],
+      ramps: []
     };
   }
   submitConfig = (event) => {
@@ -38,11 +42,16 @@ class ExperimentConfig extends React.Component {
           static_duration: data.static_duration,
           ramp_range: data.ramp_range,
           simulate: data.simulate,
-          integral: data.integral
+          integral: data.integral,
+          step: data.step,
+          torque_steps: data.torque_steps,
+          speed_steps: data.speed_steps,
+          ramps: data.ramps
         })
       );
     }
     render() {
+      const isIntegral = this.state.integral;
       return (
         <form onSubmit={this.submitConfig}>
           <table>
@@ -109,6 +118,46 @@ class ExperimentConfig extends React.Component {
                   onChange={this.configure}
                 /></td>
               </tr>
+              {isIntegral &&
+              <tr>
+                <td><label>Step </label></td>
+                <td><input
+                  type='text'
+                  name='step'
+                  value={this.state.step}
+                  onChange={this.configure}
+                /></td>
+              </tr>}
+              {isIntegral &&
+              <tr>
+                <td><label>Torque Steps </label></td>
+                <td><input
+                  type='text'
+                  name='torque_steps'
+                  value={this.state.torque_steps}
+                  onChange={this.configure}
+                /></td>
+              </tr>}
+              {isIntegral &&
+              <tr>
+                <td><label>Speed Steps </label></td>
+                <td><input
+                  type='text'
+                  name='speed_steps'
+                  value={this.state.speed_steps}
+                  onChange={this.configure}
+                /></td>
+              </tr>}
+              {isIntegral &&
+              <tr>
+                <td><label>Ramps </label></td>
+                <td><input
+                  type='text'
+                  name='ramps'
+                  value={this.state.ramps}
+                  onChange={this.configure}
+                /></td>
+              </tr>}
             </table>
             <input type="submit" value="Configure"/>
         </form>
