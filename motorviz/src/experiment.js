@@ -123,6 +123,9 @@ class ExperimentConfig extends React.Component {
         this.setState({ramps_errmessage: err});
       }
     }
+    if (nam == 'integral'){
+        this.setState({integral: !this.state.integral});
+    }
   }
   componentDidMount() {
     fetch('/getconfig')
@@ -201,18 +204,19 @@ class ExperimentConfig extends React.Component {
              <tr>
               <td><label>Simulate </label></td>
               <td><input
-                type='radio'
+                type='checkbox'
                 name='simulate'
-                value={this.state.simulate}
+                checked={this.state.simulate}
                 onChange={this.configure}
                 /> </td>
               </tr>
               <tr>
                 <td><label>Integral </label></td>
                 <td><input
-                  type='radio'
+                  type='checkbox'
                   name='integral'
                   value={this.state.integral}
+                  deafultChecked={this.state.integral}
                   onChange={this.configure}
                 /></td>
               </tr>
