@@ -32,9 +32,7 @@ class ExperimentConfig extends React.Component {
   isTwoFloats(str) {
     var split_str = str.split(",");
     if (split_str.length == 2) {
-      if (Number(split_str[0]) && Number(split_str[1])){
-        return true;
-      }
+      return true;
     }
     return false;
   }
@@ -91,7 +89,7 @@ class ExperimentConfig extends React.Component {
         this.setState({torque_range_errmessage: err});
       }
       else {
-        this.setState({[nam]: this.parseFloatList(val)});
+        this.setState({[nam]: val});
       }
     }
     if (nam == 'speed_range'){
