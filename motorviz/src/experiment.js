@@ -64,6 +64,13 @@ class ExperimentConfig extends React.Component {
     }
     return true;
   }
+  getAllValues(range, step) {
+    var values = [];
+    for (var x = range[0]; x <= range[1]; x+=step){
+      values.push(x);
+    }
+    return values
+  }
   submitConfig = (event) => {
     event.preventDefault();
     fetch('/setconfig', {
@@ -115,6 +122,11 @@ class ExperimentConfig extends React.Component {
       if (!(val == parseInt(val))) {
         err = <strong>Step should be a positive integer > 0 </strong>;
         this.setState({step_errmessage: err});
+      }
+      else{
+        this.setState({[nam]: parseInt(val)});
+        this.setState({torque_steps: this.getAllValues(this.state.torque_range, parseInt(val))});
+        this.setState({speed_steps: this.getAllValues(this.state.speed_range, parseInt(val))});
       }
     }
     if (nam == 'ramps'){
