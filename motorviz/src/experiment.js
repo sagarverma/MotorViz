@@ -61,9 +61,10 @@ class ExperimentConfig extends React.Component {
     return values
   }
   parseFloatsList(str){
-    if (Array.isArray(str)){
+    if (!(typeof str == 'string')){
       return str
     }
+    console.log(str);
     var split_str = str.split(",");
     var lst = [];
     for (var i=0; i<split_str.length; i++){
@@ -72,7 +73,7 @@ class ExperimentConfig extends React.Component {
     return lst;
   }
   parseIntsList(str){
-    if (Array.isArray(str)){
+    if (!(typeof str == 'string')){
       return str
     }
     var split_str = str.split(",");
@@ -92,10 +93,12 @@ class ExperimentConfig extends React.Component {
       ramp_range: this.parseFloatsList(this.state.ramp_range),
       simulate: this.state.simulate,
       integral: this.state.integral,
-      step: parseInt(this.state.step),
-      torque_steps: this.parseIntsList(this.state.torque_steps),
-      speed_steps: this.parseIntsList(this.state.speed_steps),
-      ramps: this.parseFloatsList(this.state.ramps)
+    }
+    if (this.state.integral) {
+      data['step'] = parseInt(this.state.step);
+      data['torque_steps'] = this.parseIntsList(this.state.torque_steps);
+      data['speed_steps'] = this.parseIntsList(this.state.speed_steps);
+      data['ramps'] = this.parseFloatsList(this.state.ramps);
     }
     console.log(data);
     fetch('/setconfig', {

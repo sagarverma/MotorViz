@@ -2,6 +2,7 @@ import sys
 from flask import Flask, request
 
 from motorrefgen.config import ExperimentConfig
+from motorrefgen.experiment import Experiment
 
 app = Flask(__name__)
 config = ExperimentConfig()
@@ -15,7 +16,5 @@ def get_experiment_config():
 def set_experiment_config():
     data = request.get_json()
     print ('here', data, flush=True)
-    print (data, flush=True)
-    print ('what is this', flush=True)
     config.set_config_from_json(data)
     return data
