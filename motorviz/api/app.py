@@ -10,6 +10,7 @@ from motorsim.simulators.conn_python import Py2Mat
 app = Flask(__name__)
 config = ExperimentConfig()
 simconfig = SimConfig()
+simulator = Py2Mat(simconfig)
 
 @app.route('/getconfig')
 def get_experiment_config():
@@ -25,13 +26,12 @@ def get_simulator_config():
 def set_experiment_config():
     data = request.get_json()
     config.set_config_from_json(data)
-    return data
 
 @app.route('/setsimconfig', methods=['POST'])
 def set_simulator_config():
     data = request.get_json()
     simconfig.set_config_from_json(data)
-    return data
+    simulator.reconfigure(simconfig)
 
 @app.route('/generate')
 def generate_reference_data():
@@ -56,3 +56,6 @@ def generate_reference_data():
             'time_domain': time_domain,
             'speed_domain': speed_domain,
             'torque_domain': torque_domain}
+
+@app.route('/simulate')
+def simulate():
