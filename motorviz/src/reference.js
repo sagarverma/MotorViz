@@ -26,10 +26,10 @@ class Reference extends React.Component {
     return (
       <table>
         <tr>
-            <td><Quantity label_x="Speed (Hz)" label_y="Time (s)"
+            <td><Quantity label_y="Speed (Hz)" label_x="Time (s)"
                 domain_x={this.state.time_domain} domain_y={this.state.speed_domain}
                 data={this.state.speed}/></td>
-            <td><Quantity label_x="Torque (% Nominal)" label_y="Time (s)"
+            <td><Quantity label_y="Torque (% Nominal)" label_x="Time (s)"
                  domain_x={this.state.time_domain} domain_y={this.state.torque_domain}
                  data={this.state.torque}/></td>
         </tr>

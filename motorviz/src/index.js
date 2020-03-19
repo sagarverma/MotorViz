@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import Reference from './reference.js';
 import Simulated from './simulated.js';
 
-import ExperimentConfig from './experiment.js';
+import Experiment from './experiment.js';
 
 const ref_speed = [
   {x: 0, y: 0},
@@ -78,4 +78,4 @@ const sim_statorpuls = [
 //                            speed_domain={[0, 80]} torque_domain={[0, 120]}
 //                            current_domain={[0, 100]} voltage_domain={[0, 100]}/>, document.getElementById("root"));
 
-ReactDOM.render(<ExperimentConfig />, document.getElementById("root"));
+ReactDOM.render(<Experiment />, document.getElementById("root"));
