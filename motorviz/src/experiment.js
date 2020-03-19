@@ -38,22 +38,6 @@ class ExperimentConfig extends React.Component {
     }
     return false;
   }
-  parseFloatsList(str){
-    var split_str = str.split(",");
-    var lst = [];
-    for (var i=0; i<split_str.length; i++){
-        lst.push(parseFloat(split_str[i]));
-    }
-    return lst;
-  }
-  parseIntsList(str){
-    var split_str = str.split(",");
-    var lst = [];
-    for (var i=0; i<split_str.length; i++){
-        lst.push(parseInt(split_str[i]));
-    }
-    return lst;
-  }
   isTwoInts(str) {
     var split_str = str.split(",");
     if (split_str.length == 2) {
@@ -76,7 +60,30 @@ class ExperimentConfig extends React.Component {
     }
     return values
   }
+  parseFloatsList(str){
+    if (Array.isArray(str)){
+      return str
+    }
+    var split_str = str.split(",");
+    var lst = [];
+    for (var i=0; i<split_str.length; i++){
+        lst.push(parseFloat(split_str[i]));
+    }
+    return lst;
+  }
+  parseIntsList(str){
+    if (Array.isArray(str)){
+      return str
+    }
+    var split_str = str.split(",");
+    var lst = [];
+    for (var i=0; i<split_str.length; i++){
+        lst.push(parseInt(split_str[i]));
+    }
+    return lst;
+  }
   submitConfig = (event) => {
+    event.preventDefault();
     let data = {
       torque_range: this.parseFloatsList(this.state.torque_range),
       speed_range: this.parseFloatsList(this.state.speed_range),
@@ -90,7 +97,7 @@ class ExperimentConfig extends React.Component {
       speed_steps: this.parseIntsList(this.state.speed_steps),
       ramps: this.parseFloatsList(this.state.ramps)
     }
-    event.preventDefault();
+    console.log(data);
     fetch('/setconfig', {
       method: 'POST',
       body: JSON.stringify(data),
