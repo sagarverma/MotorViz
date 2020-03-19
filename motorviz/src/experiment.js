@@ -32,7 +32,9 @@ class ExperimentConfig extends React.Component {
   isTwoFloats(str) {
     var split_str = str.split(",");
     if (split_str.length == 2) {
-      return true;
+      if (/^(\s*-?\d+(\.\d+)?)(\s*,\s*-?\d+(\.\d+)?)$/.test(str)) {
+        return true;
+      }
     }
     return false;
   }
@@ -54,13 +56,10 @@ class ExperimentConfig extends React.Component {
     return false;
   }
   isFloatsList(str) {
-    var split_str = str.split(",");
-    for (var i = 0; i < split_str.length; i++){
-      if (!Number(split_str[i])){
-        return false;
-      }
+    if (/^(\s*-?\d+(\.\d+)?)(\s*,\s*-?\d+(\.\d+)?)*$/.test(str)) {
+      return true;
     }
-    return true;
+    return false;
   }
   getAllValues(range, step) {
     var values = [];
@@ -70,10 +69,23 @@ class ExperimentConfig extends React.Component {
     return values
   }
   submitConfig = (event) => {
+    let data = {
+      torque_range: this.state.torque_range,
+      speed_range: this.state.speed_range,
+      static_states: this.state.static_states,
+      static_duration: this.state.static_duration,
+      ramp_range: this.state.ramp_range,
+      simulate: this.state.simulate,
+      integral: this.state.integral,
+      step: this.state.step,
+      torque_steps: this.state.torque_steps,
+      speed_steps: this.state.speed_steps,
+      ramps: this.state.ramps
+    }
     event.preventDefault();
     fetch('/setconfig', {
       method: 'POST',
-      body: JSON.stringify(this.state),
+      body: JSON.stringify(data),
       headers: {'Content-Type': 'application/json'}
     });
   }
@@ -88,8 +100,9 @@ class ExperimentConfig extends React.Component {
         err = <strong>Troque range should be two rational numbers sperated by a comma</strong>;
         this.setState({torque_range_errmessage: err});
       }
-      else {
-        this.setState({[nam]: val});
+      this.setState({[nam]: val});
+      if (this.isTwoFloats(val)) {
+        this.setState({torque_range_errmessage: ''});
       }
     }
     if (nam == 'speed_range'){
@@ -97,11 +110,19 @@ class ExperimentConfig extends React.Component {
         err = <strong>Speed range should be two rational numbers sperated by a comma</strong>;
         this.setState({speed_range_errmessage: err});
       }
+      this.setState({[nam]: val});
+      if (this.isTwoFloats(val)) {
+        this.setState({speed_range_errmessage: ''});
+      }
     }
     if (nam == 'static_states'){
       if (!this.isTwoInts(val)) {
         err = <strong>Static states should be two integers sperated by a comma</strong>;
         this.setState({static_states_errmessage: err});
+      }
+      this.setState({[nam]: val});
+      if (this.isTwoInts(val)) {
+        this.setState({static_states_errmessage: ''});
       }
     }
     if (nam == 'static_duration'){
@@ -109,11 +130,19 @@ class ExperimentConfig extends React.Component {
         err = <strong>Static duration should be two rational numbers sperated by a comma</strong>;
         this.setState({static_duration_errmessage: err});
       }
+      this.setState({[nam]: val});
+      if (this.isTwoInts(val)) {
+        this.setState({static_duration_errmessage: ''});
+      }
     }
     if (nam == 'ramp_range'){
       if (!this.isTwoFloats(val)) {
         err = <strong>Ramp range should be two rational numbers sperated by a comma</strong>;
         this.setState({ramp_range_errmessage: err});
+      }
+      this.setState({[nam]: val});
+      if (this.isTwoFloats(val)) {
+        this.setState({ramp_range_errmessage: ''});
       }
     }
     if (nam == 'step'){
@@ -121,16 +150,25 @@ class ExperimentConfig extends React.Component {
         err = <strong>Step should be a positive integer > 0 </strong>;
         this.setState({step_errmessage: err});
       }
-      else{
-        this.setState({[nam]: parseInt(val)});
+      this.setState({[nam]: parseInt(val)});
+      if (val == parseInt(val)) {
         this.setState({torque_steps: this.getAllValues(this.state.torque_range, parseInt(val))});
         this.setState({speed_steps: this.getAllValues(this.state.speed_range, parseInt(val))});
       }
+      else {
+        this.setState({[nam]: ''});
+        this.setState({torque_steps: ''});
+        this.setState({speed_steps: ''});
+      }
     }
     if (nam == 'ramps'){
-      if (!(val == parseInt(val))) {
+      if (!this.isFloatsList(val)) {
         err = <strong>Ramps should be a list of positive rational numbers</strong>;
         this.setState({ramps_errmessage: err});
+      }
+      this.setState({[nam]: val});
+      if (this.isFloatsList(val)) {
+        this.setState({ramps_errmessage: ''});
       }
     }
     if (nam == 'integral'){
