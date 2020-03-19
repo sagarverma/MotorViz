@@ -4,21 +4,35 @@ from flask import Flask, request
 from motorrefgen.config import ExperimentConfig
 from motorrefgen.experiment import Experiment
 
+from motorsim.simconfig import SimConfig
+from motorsim.simulators.conn_python import Py2Mat
+
 app = Flask(__name__)
 config = ExperimentConfig()
+simconfig = SimConfig()
 
 @app.route('/getconfig')
 def get_experiment_config():
     data = config.get_config_json()
     return data
 
+@app.route('/getsimconfig')
+def get_simulator_config():
+    data = simconfig.get_config_json()
+    return data
+
 @app.route('/setconfig', methods=['POST'])
 def set_experiment_config():
     data = request.get_json()
-    print ('here', data, flush=True)
     config.set_config_from_json(data)
     return data
 
+@app.route('/setsimconfig', methods=['POST'])
+def set_simulator_config():
+    data = request.get_json()
+    config.set_config_from_json(data)
+    return data
+    
 @app.route('/generate')
 def generate_reference_data():
     experiment = Experiment(config=config)

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import SimulatorConfig from './simulatorconfig.js';
+
 class ExperimentConfig extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +28,8 @@ class ExperimentConfig extends React.Component {
       speed_steps: [],
       speed_steps_errmessage: '',
       ramps: [],
-      ramps_errmessage: ''
+      ramps_errmessage: '',
+      simconfig: ''
     };
   }
   isTwoFloats(str) {
@@ -192,6 +195,10 @@ class ExperimentConfig extends React.Component {
     if (nam == 'integral'){
         this.setState({integral: !this.state.integral});
     }
+    if (nam == 'simulate'){
+        this.setState({simulate: !this.state.simulate});
+        this.setState({simconfig: <SimulatorConfig />})
+    }
   }
   componentDidMount() {
     fetch('/getconfig')
@@ -215,6 +222,9 @@ class ExperimentConfig extends React.Component {
       const isIntegral = this.state.integral;
       return (
         <form onSubmit={this.submitConfig}>
+          <table>
+          <tr>
+          <td>
           <table>
             <tr>
               <td><label>Torque range </label></td>
@@ -327,6 +337,12 @@ class ExperimentConfig extends React.Component {
                 /></td>
                 <td>{this.state.ramps_errmessage}</td>
               </tr>}
+            </table>
+            </td>
+            <td>
+            {this.state.simconfig}
+            </td>
+            </tr>
             </table>
             <input type="submit" value="Configure"/>
         </form>
