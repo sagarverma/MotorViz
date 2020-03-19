@@ -38,11 +38,19 @@ class ExperimentConfig extends React.Component {
     }
     return false;
   }
-  parseFloatList(str){
+  parseFloatsList(str){
     var split_str = str.split(",");
     var lst = [];
     for (var i=0; i<split_str.length; i++){
         lst.push(parseFloat(split_str[i]));
+    }
+    return lst;
+  }
+  parseIntsList(str){
+    var split_str = str.split(",");
+    var lst = [];
+    for (var i=0; i<split_str.length; i++){
+        lst.push(parseInt(split_str[i]));
     }
     return lst;
   }
@@ -70,17 +78,17 @@ class ExperimentConfig extends React.Component {
   }
   submitConfig = (event) => {
     let data = {
-      torque_range: this.state.torque_range,
-      speed_range: this.state.speed_range,
-      static_states: this.state.static_states,
-      static_duration: this.state.static_duration,
-      ramp_range: this.state.ramp_range,
+      torque_range: this.parseFloatsList(this.state.torque_range),
+      speed_range: this.parseFloatsList(this.state.speed_range),
+      static_states: this.parseIntsList(this.state.static_states),
+      static_duration: this.parseIntsList(this.state.static_duration),
+      ramp_range: this.parseFloatsList(this.state.ramp_range),
       simulate: this.state.simulate,
       integral: this.state.integral,
-      step: this.state.step,
-      torque_steps: this.state.torque_steps,
-      speed_steps: this.state.speed_steps,
-      ramps: this.state.ramps
+      step: parseInt(this.state.step),
+      torque_steps: this.parseIntsList(this.state.torque_steps),
+      speed_steps: this.parseIntsList(this.state.speed_steps),
+      ramps: this.parseFloatsList(this.state.ramps)
     }
     event.preventDefault();
     fetch('/setconfig', {
@@ -263,7 +271,6 @@ class ExperimentConfig extends React.Component {
                 <td><input
                   type='checkbox'
                   name='integral'
-                  value={this.state.integral}
                   deafultChecked={this.state.integral}
                   onChange={this.configure}
                 /></td>

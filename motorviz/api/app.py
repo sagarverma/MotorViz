@@ -14,5 +14,6 @@ def get_experiment_config():
 def set_experiment_config():
     data = request.get_json()
     print ('here', data)
+    print (data)
     config.set_config_from_json(data)
     return data
