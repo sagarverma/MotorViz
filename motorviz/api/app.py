@@ -30,9 +30,9 @@ def set_experiment_config():
 @app.route('/setsimconfig', methods=['POST'])
 def set_simulator_config():
     data = request.get_json()
-    config.set_config_from_json(data)
+    simconfig.set_config_from_json(data)
     return data
-    
+
 @app.route('/generate')
 def generate_reference_data():
     experiment = Experiment(config=config)

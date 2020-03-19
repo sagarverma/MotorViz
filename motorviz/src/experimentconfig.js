@@ -28,8 +28,7 @@ class ExperimentConfig extends React.Component {
       speed_steps: [],
       speed_steps_errmessage: '',
       ramps: [],
-      ramps_errmessage: '',
-      simconfig: ''
+      ramps_errmessage: ''
     };
   }
   isTwoFloats(str) {
@@ -67,7 +66,6 @@ class ExperimentConfig extends React.Component {
     if (!(typeof str == 'string')){
       return str
     }
-    console.log(str);
     var split_str = str.split(",");
     var lst = [];
     for (var i=0; i<split_str.length; i++){
@@ -103,7 +101,6 @@ class ExperimentConfig extends React.Component {
       data['speed_steps'] = this.parseIntsList(this.state.speed_steps);
       data['ramps'] = this.parseFloatsList(this.state.ramps);
     }
-    console.log(data);
     fetch('/setconfig', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -197,7 +194,6 @@ class ExperimentConfig extends React.Component {
     }
     if (nam == 'simulate'){
         this.setState({simulate: !this.state.simulate});
-        this.setState({simconfig: <SimulatorConfig />})
     }
   }
   componentDidMount() {
@@ -220,6 +216,7 @@ class ExperimentConfig extends React.Component {
     }
     render() {
       const isIntegral = this.state.integral;
+      const toSimulate = this.state.simulate;
       return (
         <form onSubmit={this.submitConfig}>
           <table>
@@ -282,7 +279,7 @@ class ExperimentConfig extends React.Component {
               <td><input
                 type='checkbox'
                 name='simulate'
-                checked={this.state.simulate}
+                defaultChecked={this.state.simulate}
                 onChange={this.configure}
                 /> </td>
               </tr>
@@ -339,12 +336,12 @@ class ExperimentConfig extends React.Component {
               </tr>}
             </table>
             </td>
-            <td>
-            {this.state.simconfig}
-            </td>
+            {toSimulate && <td>
+              <SimulatorConfig />
+            </td>}
             </tr>
             </table>
-            <input type="submit" value="Configure"/>
+            <input type="submit" value="Configure Generator"/>
         </form>
       )
     }

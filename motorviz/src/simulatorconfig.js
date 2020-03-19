@@ -90,9 +90,69 @@ class SimulatorConfig extends React.Component {
       })
     );
   }
+  parseFloatsList(str){
+    if (!(typeof str == 'string')){
+      return str
+    }
+    console.log(str);
+    var split_str = str.split(",");
+    var lst = [];
+    for (var i=0; i<split_str.length; i++){
+        lst.push(parseFloat(split_str[i]));
+    }
+    return lst;
+  }
+  simConfig = (event) => {
+    event.preventDefault();
+    let data = {
+      Ts : parseFloat(this.state.Ts),
+      Tpwm : parseFloat(this.state.Tpwm),
+      Tfixe : parseFloat(this.state.Tfixe),
+      Rs : parseFloat(this.state.Rs),
+      Rr : parseFloat(this.state.Rr),
+      Ls : parseFloat(this.state.Ls),
+      Lr : parseFloat(this.state.Lr),
+      Lm : parseFloat(this.state.Lm),
+      Lfs : parseFloat(this.state.Lfs),
+      Lfr : parseFloat(this.state.Lfr),
+      Lmt : parseFloat(this.state.Lmt),
+      P1 : parseFloat(this.state.P1),
+      P2 : parseFloat(this.state.P2),
+      np : parseInt(this.state.np),
+      Psdnom : parseFloat(this.state.Psdnom),
+      Uo : parseFloat(this.state.Up),
+      Ulim : parseFloat(this.state.Ulim),
+      Psinit : this.parseFloatsList(this.state.Psinit),
+      Prinit : this.parseFloatsList(this.state.Prinit),
+      Inom : parseFloat(this.state.Inom),
+      Prdnom : parseFloat(this.state.Prdnom),
+      SLP_Coeff : parseFloat(this.state.SLP_Coeff),
+      Vnom : parseFloat(this.state.Vnom),
+      SFC_Coeff : parseFloat(this.state.SFC_Coeff),
+      J : parseFloat(this.state.J),
+      wrinit : parseFloat(this.state.wrinit),
+      thrinit : parseFloat(this.state.thrinit),
+      Jm : parseFloat(this.state.Jm),
+      tauL : parseFloat(this.state.tauL),
+      wL : parseFloat(this.state.wL),
+      wCurr : parseFloat(this.state.wCurr),
+      wSpeed_PI : parseFloat(this.state.wSpeed_PI),
+      xiSpeed_PI : parseFloat(this.state.xiSpeed_PI),
+      wCurr_PI : parseFloat(this.state.wCurr_PI),
+      xiCurr_PI : parseFloat(this.state.xiCurr_PI),
+      wSpeedEst : parseFloat(this.state.wSpeedEst),
+      wn : parseFloat(this.state.wn),
+      Tn : parseFloat(this.state.Tn)
+    }
+    fetch('/setsimconfig', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json'}
+    });
+  }
   render() {
     return (
-      <form onSubmit={this.submitConfig}>
+      <form onSubmit={this.simConfig}>
         <table>
           <tr>
             <td><label>Ts </label></td>
@@ -382,6 +442,7 @@ class SimulatorConfig extends React.Component {
             /></td>
           </tr>
         </table>
+        <input type="submit" value="Configure Simulator"/>
        </form>
     )
   }
