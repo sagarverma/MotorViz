@@ -25,7 +25,9 @@ def get_simulator_config():
 @app.route('/setconfig', methods=['POST'])
 def set_experiment_config():
     data = request.get_json()
+    print (data)
     config.set_config_from_json(data)
+    return data
 
 @app.route('/setsimconfig', methods=['POST'])
 def set_simulator_config():
@@ -57,5 +59,5 @@ def generate_reference_data():
             'speed_domain': speed_domain,
             'torque_domain': torque_domain}
 
-@app.route('/simulate')
-def simulate():
+# @app.route('/simulate')
+# def simulate():

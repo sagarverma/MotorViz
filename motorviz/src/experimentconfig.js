@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import SimulatorConfig from './simulatorconfig.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class ExperimentConfig extends React.Component {
   constructor(props) {
@@ -170,6 +170,7 @@ class ExperimentConfig extends React.Component {
       }
       this.setState({[nam]: parseInt(val)});
       if (val == parseInt(val)) {
+        console.log(this.getAllValues(this.state.torque_range, parseInt(val)));
         this.setState({torque_steps: this.getAllValues(this.state.torque_range, parseInt(val))});
         this.setState({speed_steps: this.getAllValues(this.state.speed_range, parseInt(val))});
       }
@@ -216,132 +217,228 @@ class ExperimentConfig extends React.Component {
     }
     render() {
       const isIntegral = this.state.integral;
-      const toSimulate = this.state.simulate;
       return (
         <form onSubmit={this.submitConfig}>
-          <table>
-          <tr>
-          <td>
-          <table>
-            <tr>
-              <td><label>Torque range </label></td>
-              <td><input
-                type='text'
-                name='torque_range'
-                value={this.state.torque_range}
-                onChange={this.configure}
-              /> </td>
-              <td>{this.state.torque_range_errmessage}</td>
-            </tr>
-            <tr>
-              <td><label>Speed range </label></td>
-              <td><input
+          <div class="form-group">
+            <div class="row">
+              <div class="col col-lg-4">
+                <label for="torque_range">Torque range</label>
+              </div>
+              <div class="col col-lg-4">
+                <input
+                  type='text'
+                  name='torque_range'
+                  value={this.state.torque_range}
+                  onChange={this.configure}
+                />
+              </div>
+              <div class="col-md-auto">
+                <div class="form-control-feedback">
+                    {this.state.torque_range_errmessage}
+                </div>
+              </div>
+            </div>
+
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="speed_range">Speed range</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
                 type='text'
                 name='speed_range'
                 value={this.state.speed_range}
                 onChange={this.configure}
-              /> </td>
-              <td>{this.state.speed_range_errmessage}</td>
-            </tr>
-            <tr>
-              <td><label>Static states </label></td>
-              <td><input
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                  {this.state.speed_range_errmessage}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="static_states">Static states</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
                 type='text'
                 name='static_states'
                 value={this.state.static_states}
                 onChange={this.configure}
-               /> </td>
-               <td>{this.state.static_states_errmessage}</td>
-            </tr>
-            <tr>
-              <td><label>Static duration </label></td>
-              <td><input
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                  {this.state.static_states_errmessage}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="static_duration">Static duration</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
                 type='text'
                 name='static_duration'
                 value={this.state.static_duration}
                 onChange={this.configure}
-              /> </td>
-              <td>{this.state.static_duration_errmessage}</td>
-            </tr>
-            <tr>
-              <td><label>Ramp range </label></td>
-              <td><input
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                  {this.state.static_duration_errmessage}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="ramp_range">Ramp range</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
                 type='text'
                 name='ramp_range'
                 value={this.state.ramp_range}
                 onChange={this.configure}
-                /> </td>
-                <td>{this.state.ramp_range_errmessage}</td>
-             </tr>
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                  {this.state.ramp_range_errmessage}
+              </div>
+            </div>
+          </div>
 
-             <tr>
-              <td><label>Simulate </label></td>
-              <td><input
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="integral">Integral</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
+                type='checkbox'
+                name='integral'
+                defaultChecked={this.state.integral}
+                onChange={this.configure}
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                {this.state.integral_errmessage}
+              </div>
+            </div>
+          </div>
+
+          {isIntegral &&
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="step">Step</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
+                type='text'
+                name='step'
+                defaultChecked={this.state.step}
+                onChange={this.configure}
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                  {this.state.step_errmessage}
+              </div>
+            </div>
+          </div>}
+
+          {isIntegral &&
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="torque_steps">Torque steps</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
+                type='text'
+                name='torque_steps'
+                value={this.state.torque_steps}
+                onChange={this.configure}
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                  {this.state.torque_steps_errmessage}
+              </div>
+            </div>
+          </div>}
+
+          {isIntegral &&
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="speed_steps">Speed steps</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
+                type='text'
+                name='speed_steps'
+                value={this.state.speed_steps}
+                onChange={this.configure}
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                  {this.state.speed_steps_errmessage}
+              </div>
+            </div>
+          </div>}
+
+          {isIntegral &&
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="ramps">Ramps</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
+                type='text'
+                name='ramps'
+                value={this.state.ramps}
+                onChange={this.configure}
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                  {this.state.ramps_errmessage}
+              </div>
+            </div>
+          </div>}
+
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="simulate">Simulate</label>
+            </div>
+            <div class="col col-lg-4">
+              <input
                 type='checkbox'
                 name='simulate'
                 defaultChecked={this.state.simulate}
                 onChange={this.configure}
-                /> </td>
-              </tr>
-              <tr>
-                <td><label>Integral </label></td>
-                <td><input
-                  type='checkbox'
-                  name='integral'
-                  deafultChecked={this.state.integral}
-                  onChange={this.configure}
-                /></td>
-              </tr>
-              {isIntegral &&
-              <tr>
-                <td><label>Step </label></td>
-                <td><input
-                  type='text'
-                  name='step'
-                  value={this.state.step}
-                  onChange={this.configure}
-                /></td>
-                <td>{this.state.step_errmessage}</td>
-              </tr>}
-              {isIntegral &&
-              <tr>
-                <td><label>Torque Steps </label></td>
-                <td><input
-                  type='text'
-                  name='torque_steps'
-                  value={this.state.torque_steps}
-                  onChange={this.configure}
-                /></td>
-              </tr>}
-              {isIntegral &&
-              <tr>
-                <td><label>Speed Steps </label></td>
-                <td><input
-                  type='text'
-                  name='speed_steps'
-                  value={this.state.speed_steps}
-                  onChange={this.configure}
-                /></td>
-              </tr>}
-              {isIntegral &&
-              <tr>
-                <td><label>Ramps </label></td>
-                <td><input
-                  type='text'
-                  name='ramps'
-                  value={this.state.ramps}
-                  onChange={this.configure}
-                /></td>
-                <td>{this.state.ramps_errmessage}</td>
-              </tr>}
-            </table>
-            </td>
-            {toSimulate && <td>
-              <SimulatorConfig />
-            </td>}
-            </tr>
-            </table>
+              />
+            </div>
+            <div class="col-md-auto">
+              <div class="form-control-feedback">
+                {this.state.simulate_errmessage}
+              </div>
+            </div>
+          </div>
+
+          </div>
+
+
+
             <input type="submit" value="Configure Generator"/>
+
         </form>
       )
     }
