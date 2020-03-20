@@ -13,7 +13,7 @@ app = Flask(__name__)
 config = ExperimentConfig()
 simconfig = SimConfig()
 simulator = Py2Mat(simconfig)
-experiment = Experiment(config=config)
+experiment = None
 
 @app.route('/getconfig')
 def get_experiment_config():
@@ -40,6 +40,7 @@ def set_simulator_config():
 
 @app.route('/generate')
 def generate_reference_data():
+    global experiment
     experiment = Experiment(config=config)
     ref_speed = []
     for i in range(len(experiment.reference_speed)):
@@ -64,6 +65,7 @@ def generate_reference_data():
 
 @app.route('/simulate')
 def simulate():
+    global experiment
     experiment.simulate(simulator)
     ref_speed = []
     for i in range(len(experiment.reference_speed)):
@@ -131,7 +133,7 @@ def simulate():
             'speed_domain': speed_domain,
             'torque_domain': torque_domain,
             'voltage_d': voltage_d,
-            'voltage_q': votlage_q,
+            'voltage_q': voltage_q,
             'current_d': current_d,
             'current_q': current_q,
             'torque': torque,
