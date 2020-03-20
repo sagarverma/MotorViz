@@ -95,7 +95,7 @@ class ExperimentConfig extends React.Component {
       simulate: this.state.simulate,
       integral: this.state.integral,
     }
-    if (this.state.integral) {
+    if (this.state.integral == true) {
       data['step'] = parseInt(this.state.step);
       data['torque_steps'] = this.parseIntsList(this.state.torque_steps);
       data['speed_steps'] = this.parseIntsList(this.state.speed_steps);
@@ -216,7 +216,8 @@ class ExperimentConfig extends React.Component {
       );
     }
     render() {
-      const isIntegral = this.state.integral;
+      let isIntegral = this.state.integral;
+      let toSimulate = this.state.simulate;
       return (
         <form onSubmit={this.submitConfig}>
           <div class="form-group">
@@ -323,7 +324,7 @@ class ExperimentConfig extends React.Component {
               <input
                 type='checkbox'
                 name='integral'
-                defaultChecked={this.state.integral}
+                checked={this.state.integral}
                 onChange={this.configure}
               />
             </div>
@@ -343,7 +344,7 @@ class ExperimentConfig extends React.Component {
               <input
                 type='text'
                 name='step'
-                defaultChecked={this.state.step}
+                value={this.state.step}
                 onChange={this.configure}
               />
             </div>
@@ -422,7 +423,7 @@ class ExperimentConfig extends React.Component {
               <input
                 type='checkbox'
                 name='simulate'
-                defaultChecked={this.state.simulate}
+                checked={this.state.simulate}
                 onChange={this.configure}
               />
             </div>
@@ -435,9 +436,7 @@ class ExperimentConfig extends React.Component {
 
           </div>
 
-
-
-            <input type="submit" value="Configure Generator"/>
+            <button type="submit" class="btn btn-primary">Configure</button>
 
         </form>
       )
