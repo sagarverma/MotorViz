@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Async from 'react-async';
+
 import ExperimentConfig from './experimentconfig.js';
 import SimulatorConfig from './simulatorconfig.js';
+
 import Reference from './reference.js';
+import Simulated from './simulated.js';
 
 class Experiment extends React.Component {
   constructor(props) {
@@ -16,8 +20,21 @@ class Experiment extends React.Component {
       ref_torque: [],
       time_domain: [],
       speed_domain: [],
-      torque_domain: []
+      torque_domain: [],
+      voltage_d: [],
+      voltage_q: [],
+      current_d: [],
+      current_q: [],
+      torque: [],
+      speed: [],
+      statorPuls: [],
+      reference_torque_interp: [],
+      reference_speed_interp: [],
+      current_domain: [],
+      voltage_domain: [],
+
     };
+    this.simulateOnRef = this.simulateOnRef.bind(this);
   }
   generateReference = (event) => {
     this.setState({generate: true});
@@ -33,11 +50,11 @@ class Experiment extends React.Component {
         })
       );
   }
-  simulateOnRef = (event) => {
+  async simulateOnRef(event) {
     event.preventDefault();
-    fetch('/simulate')
-      .then(res => res.json())
-      .then(data => this.setState({
+    const response = await fetch('/simulate');
+    const data = await response.json();
+    this.setState({
           ref_speed: data.ref_speed,
           ref_torque: data.ref_torque,
           time_domain: data.time_domain,
@@ -45,17 +62,19 @@ class Experiment extends React.Component {
           torque_domain: data.torque_domain,
 
           voltage_d: data.voltage_d,
-          voltage_q: data.votlage_q,
+          voltage_q: data.voltage_q,
           current_d: data.current_d,
           current_q: data.current_q,
           torque: data.torque,
           speed: data.speed,
           statorPuls: data.statorPuls,
           reference_torque_interp: data.reference_torque_interp,
-          reference_speed_interp: data.reference_speed_interp
-        })
-      );
-      this.setState({simulate:true});
+          reference_speed_interp: data.reference_speed_interp,
+          current_domain: data.current_domain,
+          voltage_domain: data.voltage_domain
+        });
+      this.setState({simulate: true});
+      console.log(this.state);
   }
   configure = (event) => {
     let nam = event.target.name;
@@ -64,7 +83,7 @@ class Experiment extends React.Component {
   }
     render() {
       const generate = this.state.generate;
-      const toSimulate = this.state.simulate;
+      const simulate = this.state.simulate;
       return (
         <div>
         <div class="row">
@@ -84,7 +103,14 @@ class Experiment extends React.Component {
           </div>
         </div>
         <div class="row">
-
+        {simulate &&
+          <Simulated speed={this.state.speed} torque={this.state.torque}
+                                   current_d={this.state.current_d} current_q={this.state.current_q}
+                                   voltage_d={this.state.voltage_d} voltage_q={this.state.voltage_q}
+                                   statorPuls={this.state.statorPuls} time_domain={this.state.time_domain}
+                                   speed_domain={this.state.speed_domain} torque_domain={this.state.torque_domain}
+                                   current_domain={this.state.current_domain} voltage_domain={this.state.voltage_domain}/>
+        }
         </div>
 
 

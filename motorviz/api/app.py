@@ -1,5 +1,6 @@
 import sys
 import copy
+import time
 
 from flask import Flask, request
 
@@ -92,6 +93,9 @@ def simulate():
         voltage_q.append({'x': experiment.time[i],
                           'y': experiment.voltage_q[i]})
 
+    voltage_domain = [min(experiment.voltage_d.min(), experiment.voltage_q.min()),
+                      max(experiment.voltage_d.max(), experiment.voltage_q.max())]
+
     current_d = []
     for i in range(len(experiment.time)):
         current_d.append({'x': experiment.time[i],
@@ -101,6 +105,9 @@ def simulate():
     for i in range(len(experiment.time)):
         current_q.append({'x': experiment.time[i],
                           'y': experiment.current_q[i]})
+
+    current_domain = [min(experiment.current_d.min(), experiment.current_q.min()),
+                      max(experiment.current_d.max(), experiment.current_q.max())]
 
     torque = []
     for i in range(len(experiment.time)):
@@ -140,5 +147,7 @@ def simulate():
             'speed': speed,
             'statorPuls': statorPuls,
             'reference_torque_interp': reference_torque_interp,
-            'reference_speed_interp': reference_speed_interp
+            'reference_speed_interp': reference_speed_interp,
+            'current_domain': current_domain,
+            'voltage_domain': voltage_domain
             }

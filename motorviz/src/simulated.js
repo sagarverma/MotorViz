@@ -42,25 +42,25 @@ class Simulated extends React.Component {
     return (
       <table>
         <tr>
-            <td><Quantity label_x="Speed (Hz)" label_y="Time (s)"
+            <td><Quantity label_y="Speed (Hz)" label_x="Time (s)"
                   domain_x={this.state.time_domain} domain_y={this.state.speed_domain}
                   data={this.state.speed}/>
             </td>
-            <td><Quantity label_x="Torque (% Nominal)" label_y="Time (s)"
+            <td><Quantity label_y="Torque (% Nominal)" label_x="Time (s)"
                  domain_x={this.state.time_domain} domain_y={this.state.torque_domain}
                  data={this.state.torque}/>
             </td>
-            <td><TwoQuantities label_x="Current (A)" label_y="Time (s)"
+            <td><TwoQuantities label_y="Current (A)" label_x="Time (s)"
                  domain_x={this.state.time_domain} domain_y={this.state.current_domain}
                  data_one={this.state.current_d} data_two={this.state.current_q}
                  legend_one="Current d" legend_two="Current q"/>
             </td>
-            <td><TwoQuantities label_x="Voltage (V)" label_y="Time (s)"
+            <td><TwoQuantities label_y="Voltage (V)" label_x="Time (s)"
                  domain_x={this.state.time_domain} domain_y={this.state.voltage_domain}
                  data_one={this.state.voltage_d} data_two={this.state.voltage_q}
                  legend_one="Voltge d" legend_two="Voltage q"/>
             </td>
-            <td><Quantity label_x="StatorPuls (Hz)" label_y="Time (s)"
+            <td><Quantity label_y="StatorPuls (Hz)" label_x="Time (s)"
                  domain_x={this.state.time_domain} domain_y={this.state.speed_domain}
                  data={this.state.statorPuls}/>
             </td>
