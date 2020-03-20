@@ -415,24 +415,7 @@ class ExperimentConfig extends React.Component {
             </div>
           </div>}
 
-          <div class="row">
-            <div class="col col-lg-4">
-              <label for="simulate">Simulate</label>
-            </div>
-            <div class="col col-lg-4">
-              <input
-                type='checkbox'
-                name='simulate'
-                checked={this.state.simulate}
-                onChange={this.configure}
-              />
-            </div>
-            <div class="col-md-auto">
-              <div class="form-control-feedback">
-                {this.state.simulate_errmessage}
-              </div>
-            </div>
-          </div>
+          
 
           </div>
 

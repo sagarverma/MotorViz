@@ -9,7 +9,9 @@ class Experiment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      experimentconfig: <ExperimentConfig />,
       generate: false,
+      simulate: false,
       ref_speed: [],
       ref_torque: [],
       time_domain: [],
@@ -17,7 +19,7 @@ class Experiment extends React.Component {
       torque_domain: []
     };
   }
-  generateConfig = (event) => {
+  generateReference = (event) => {
     this.setState({generate: true});
     event.preventDefault();
     fetch('/generate')
@@ -31,6 +33,30 @@ class Experiment extends React.Component {
         })
       );
   }
+  simulateOnRef = (event) => {
+    event.preventDefault();
+    fetch('/simulate')
+      .then(res => res.json())
+      .then(data => this.setState({
+          ref_speed: data.ref_speed,
+          ref_torque: data.ref_torque,
+          time_domain: data.time_domain,
+          speed_domain: data.speed_domain,
+          torque_domain: data.torque_domain,
+
+          voltage_d: data.voltage_d,
+          voltage_q: data.votlage_q,
+          current_d: data.current_d,
+          current_q: data.current_q,
+          torque: data.torque,
+          speed: data.speed,
+          statorPuls: data.statorPuls,
+          reference_torque_interp: data.reference_torque_interp,
+          reference_speed_interp: data.reference_speed_interp
+        })
+      );
+      this.setState({simulate:true});
+  }
   configure = (event) => {
     let nam = event.target.name;
     let val = event.target.value;
@@ -38,20 +64,22 @@ class Experiment extends React.Component {
   }
     render() {
       const generate = this.state.generate;
+      const toSimulate = this.state.simulate;
       return (
         <div>
         <div class="row">
           <div class="col-sm">
-            <ExperimentConfig />
-            <form onSubmit={this.generateConfig}>
-                <input type="submit" value="Generate"/>
-                </form>
+                {this.state.experimentconfig}
+                <button type="submit" class="btn btn-secondary" onClick={this.generateReference}>Generate</button>
           </div>
           <div class="col">
           {generate &&
             <Reference speed={this.state.ref_speed} torque={this.state.ref_torque}
                      time_domain={this.state.time_domain} speed_domain={this.state.speed_domain}
                      torque_domain={this.state.torque_domain}/>
+          }
+          {generate &&
+            <button type="submit" class="btn btn-secondary" onClick={this.simulateOnRef}>Simulate</button>
           }
           </div>
         </div>
