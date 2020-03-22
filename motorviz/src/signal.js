@@ -1,6 +1,7 @@
 import React from 'react';
 import { VictoryLine, VictoryChart, VictoryAxis,
-         VictoryTheme, VictoryLabel, VictoryZoomContainer } from 'victory';
+         VictoryTheme, VictoryLabel, VictoryZoomContainer,
+         VictoryCursorContainer, createContainer} from 'victory';
 
 class Quantity extends React.Component {
     constructor(props) {
@@ -23,11 +24,13 @@ class Quantity extends React.Component {
             };
     }
     render() {
+      const VictoryZoonCursorContainer = createContainer("zoom", "cursor");
         return (
             <VictoryChart
                 theme={VictoryTheme.material}
                 domainPadding={20}
-                containerComponent={<VictoryZoomContainer />}
+                containerComponent={<VictoryZoonCursorContainer
+                                    cursorLabel={({ datum }) => `${datum.x}, ${datum.y}`}/ >}
             >
             <VictoryAxis crossAxis
                 domain={this.state.domain_x}
@@ -176,11 +179,13 @@ class TwoQuantities extends React.Component {
     }
     render() {
         const styles = this.getStyles();
+        const VictoryZoonCursorContainer = createContainer("zoom", "cursor");
         return (
             <VictoryChart
                 theme={VictoryTheme.material}
                 domainPadding={20}
-                containerComponent={<VictoryZoomContainer />}
+                containerComponent={<VictoryZoonCursorContainer
+                                    cursorLabel={({ datum }) => `${datum.x}, ${datum.y}`}/ >}
             >
             <VictoryLabel x={200} y={20} style={styles.labelOne}
                 text={this.state.legend_one}
