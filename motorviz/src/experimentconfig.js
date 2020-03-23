@@ -111,7 +111,6 @@ class ExperimentConfig extends React.Component {
     let nam = event.target.name;
     let val = event.target.value;
     let err = '';
-    console.log(nam, val);
     //validation and strong alert, also if correct parse it to proper format
     if (nam == 'torque_range'){
       if (!this.isTwoFloats(val)) {
@@ -170,7 +169,6 @@ class ExperimentConfig extends React.Component {
       }
       this.setState({[nam]: parseInt(val)});
       if (val == parseInt(val)) {
-        console.log(this.getAllValues(this.state.torque_range, parseInt(val)));
         this.setState({torque_steps: this.getAllValues(this.state.torque_range, parseInt(val))});
         this.setState({speed_steps: this.getAllValues(this.state.speed_range, parseInt(val))});
       }
@@ -415,7 +413,7 @@ class ExperimentConfig extends React.Component {
             </div>
           </div>}
 
-          
+
 
           </div>
 

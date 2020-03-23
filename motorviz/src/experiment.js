@@ -49,6 +49,7 @@ class Experiment extends React.Component {
           torque_domain: data.torque_domain
         })
       );
+      console.log(this.state.ref_speed);
   }
   async simulateOnRef(event) {
     event.preventDefault();
@@ -74,7 +75,6 @@ class Experiment extends React.Component {
           voltage_domain: data.voltage_domain
         });
       this.setState({simulate: true});
-      console.log(this.state);
   }
   configure = (event) => {
     let nam = event.target.name;
