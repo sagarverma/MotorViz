@@ -24,13 +24,12 @@ class Quantity extends React.Component {
             };
     }
     render() {
-      const VictoryZoonCursorContainer = createContainer("zoom", "cursor");
+      const VictoryZoomCursorContainer = createContainer("zoom", "cursor");
         return (
             <VictoryChart
                 theme={VictoryTheme.material}
                 domainPadding={20}
-                containerComponent={<VictoryZoonCursorContainer
-                                    cursorLabel={({ datum }) => `${datum.x}, ${datum.y}`}/ >}
+                containerComponent={<VictoryZoomContainer />}
             >
             <VictoryAxis crossAxis
                 domain={this.state.domain_x}
@@ -179,13 +178,12 @@ class TwoQuantities extends React.Component {
     }
     render() {
         const styles = this.getStyles();
-        const VictoryZoonCursorContainer = createContainer("zoom", "cursor");
+        const VictoryZoomCursorContainer = createContainer("zoom", "cursor");
         return (
             <VictoryChart
                 theme={VictoryTheme.material}
                 domainPadding={20}
-                containerComponent={<VictoryZoonCursorContainer
-                                    cursorLabel={({ datum }) => `${datum.x}, ${datum.y}`}/ >}
+                containerComponent={<VictoryZoomContainer />}
             >
             <VictoryLabel x={200} y={20} style={styles.labelOne}
                 text={this.state.legend_one}

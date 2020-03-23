@@ -13,6 +13,7 @@ from motorsim.simulators.conn_python import Py2Mat
 app = Flask(__name__)
 config = ExperimentConfig()
 simconfig = SimConfig()
+simconfig.set_config_from_json({'Data_Ts': 0.05})
 simulator = Py2Mat(simconfig)
 experiment = None
 
@@ -133,7 +134,6 @@ def simulate():
         reference_speed_interp.append({'x':round( experiment.time[i], 5),
                           'y': round(experiment.reference_speed_interp[i], 2)})
 
-    print (ref_speed)
     return {'ref_speed': ref_speed,
             'ref_torque': ref_torque,
             'time_domain': time_domain,
