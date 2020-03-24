@@ -9,6 +9,8 @@ import SimulatorConfig from './simulatorconfig.js';
 import Reference from './reference.js';
 import Simulated from './simulated.js';
 
+import Metrics from './metrics.js';
+
 class Experiment extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +18,7 @@ class Experiment extends React.Component {
       experimentconfig: <ExperimentConfig />,
       generate: false,
       simulate: false,
+      metrics: false,
       ref_speed: [],
       ref_torque: [],
       time_domain: [],
@@ -74,7 +77,9 @@ class Experiment extends React.Component {
           voltage_domain: data.voltage_domain
         });
       this.setState({simulate: true});
-      console.log(this.state);
+  }
+  computeMetrics = (event) => {
+    this.setState({metrics: true});
   }
   configure = (event) => {
     let nam = event.target.name;
@@ -84,6 +89,7 @@ class Experiment extends React.Component {
     render() {
       const generate = this.state.generate;
       const simulate = this.state.simulate;
+      const metrics = this.state.metrics;
       return (
         <div>
         <div class="row">
@@ -111,10 +117,19 @@ class Experiment extends React.Component {
                                    speed_domain={this.state.speed_domain} torque_domain={this.state.torque_domain}
                                    current_domain={this.state.current_domain} voltage_domain={this.state.voltage_domain}/>
         }
+        {simulate &&
+          <button type="submit" class="btn btn-primary" onClick={this.computeMetrics}>Compute Metrics</button>}
         </div>
 
 
-
+        <div>
+          {metrics && <Metrics torque={this.state.torque} speed={this.state.speed}
+                        reference_torque_interp={this.state.reference_torque_interp}
+                        reference_speed_interp={this.state.reference_speed_interp}
+                        time_domain={this.state.time_domain}
+                        speed_domain={this.state.speed_domain}
+                        torque_domain={this.state.torque_domain}/>}
+        </div>
 
         </div>
       )

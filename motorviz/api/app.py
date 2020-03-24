@@ -10,6 +10,8 @@ from motorrefgen.experiment import Experiment
 from motorsim.simconfig import SimConfig
 from motorsim.simulators.conn_python import Py2Mat
 
+from motormetrics.ee import *
+
 app = Flask(__name__)
 config = ExperimentConfig()
 simconfig = SimConfig()
@@ -151,3 +153,43 @@ def simulate():
             'current_domain': current_domain,
             'voltage_domain': voltage_domain
             }
+
+@app.route('/computemetrics')
+def compute_metrics():
+    global experiment
+
+    ref_speed = experiment.reference_speed
+    ref_torque = experiment.reference_torque
+    ref_speed_t = experiment.speed_time
+    ref_torque_t = experiment.torque_time
+
+    ref_speed_interp = experiment.reference_speed_interp
+    ref_torque_interp = experiment.reference_torque_interp
+
+    sim_speed = experiment.speed
+    sim_torque = experiment.torque
+
+    sim_time = experiment.time
+
+    ramp_scopes = get_ramps_from_raw_reference(ref_speed, ref_speed_t)
+
+    perc2_times = []
+    perc95_times = []
+    following_errs = []
+
+    for ramp_scope in ramp_scopes:
+        sim_ramp_scope = get_ramp_from_sim_reference(sim_time, ramp_scope)
+        print (sim_ramp_scope)
+        ref_speed_scope = ref_speed_interp[sim_ramp_scope[1]: sim_ramp_scope[-1]]
+        sim_speed_scope = sim_speed[sim_ramp_scope[1]: sim_ramp_scope[-1]]
+        sim_time_scope = sim_time[sim_ramp_scope[1]: sim_ramp_scope[-1]]
+
+        perc2_times.append(response_time_2perc(ref_speed_scope,
+                            sim_speed_scope, sim_time_scope))
+        perc95_times.append(response_time_95perc(ref_speed_scope,
+                            sim_speed_scope, sim_time_scope))
+        following_errs.append(following_error(ref_speed_scope, sim_speed_scope))
+
+    return {'perc2_times': perc2_times,
+            'perc95_times': perc95_times,
+            'following_errs': following_errs}
