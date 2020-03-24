@@ -11,7 +11,7 @@ import Simulated from './simulated.js';
 
 import Metrics from './metrics.js';
 
-class Experiment extends React.Component {
+class RandomExperiment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -136,4 +136,4 @@ class Experiment extends React.Component {
     }
 }
 
-export default Experiment;
+export default RandomExperiment;
