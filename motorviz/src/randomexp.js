@@ -55,7 +55,7 @@ class RandomExperiment extends React.Component {
   }
   async simulateOnRef(event) {
     event.preventDefault();
-    const response = await fetch('/simulate');
+    const response = await fetch('/randsimulate');
     const data = await response.json();
     this.setState({
           ref_speed: data.ref_speed,

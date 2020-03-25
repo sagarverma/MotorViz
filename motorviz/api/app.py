@@ -66,8 +66,8 @@ def generate_reference_data():
             'speed_domain': speed_domain,
             'torque_domain': torque_domain}
 
-@app.route('/simulate')
-def simulate():
+@app.route('/randsimulate')
+def rand_simulate():
     global experiment
     experiment.simulate(simulator)
     ref_speed = []
@@ -142,6 +142,78 @@ def simulate():
             'speed_domain': speed_domain,
             'torque_domain': torque_domain,
             'voltage_d': voltage_d,
+            'voltage_q': voltage_q,
+            'current_d': current_d,
+            'current_q': current_q,
+            'torque': torque,
+            'speed': speed,
+            'statorPuls': statorPuls,
+            'reference_torque_interp': reference_torque_interp,
+            'reference_speed_interp': reference_speed_interp,
+            'current_domain': current_domain,
+            'voltage_domain': voltage_domain
+            }
+
+@app.route('/manualsimulate', methods=['POST'])
+def manual_simulate():
+    data = request.get_json()
+    global experiment
+    experiment = Experiment(config=config)
+    experiment.set_manual_reference(data)
+
+    experiment.simulate(simulator)
+    voltage_d = []
+    for i in range(len(experiment.time)):
+        voltage_d.append({'x': round(experiment.time[i], 5),
+                          'y': round(experiment.voltage_d[i], 2)})
+
+    voltage_q = []
+    for i in range(len(experiment.time)):
+        voltage_q.append({'x': round(experiment.time[i], 5),
+                          'y': round(experiment.voltage_q[i], 2)})
+
+    voltage_domain = [min(experiment.voltage_d.min(), experiment.voltage_q.min()),
+                      max(experiment.voltage_d.max(), experiment.voltage_q.max())]
+
+    current_d = []
+    for i in range(len(experiment.time)):
+        current_d.append({'x': round(experiment.time[i], 5),
+                          'y': round(experiment.current_d[i], 2)})
+
+    current_q = []
+    for i in range(len(experiment.time)):
+        current_q.append({'x': round(experiment.time[i], 5),
+                          'y': round(experiment.current_q[i], 2)})
+
+    current_domain = [min(experiment.current_d.min(), experiment.current_q.min()),
+                      max(experiment.current_d.max(), experiment.current_q.max())]
+
+    torque = []
+    for i in range(len(experiment.time)):
+        torque.append({'x': round(experiment.time[i], 5),
+                          'y': round(experiment.torque[i], 2)})
+
+    speed = []
+    for i in range(len(experiment.time)):
+        speed.append({'x': round(experiment.time[i], 5),
+                          'y': round(experiment.speed[i], 2)})
+
+    statorPuls = []
+    for i in range(len(experiment.time)):
+        statorPuls.append({'x': round(experiment.time[i], 5),
+                          'y': round(experiment.statorPuls[i], 2)})
+
+    reference_torque_interp = []
+    for i in range(len(experiment.time)):
+        reference_torque_interp.append({'x': round(experiment.time[i], 5),
+                          'y': round(experiment.reference_torque_interp[i], 2)})
+
+    reference_speed_interp = []
+    for i in range(len(experiment.time)):
+        reference_speed_interp.append({'x':round( experiment.time[i], 5),
+                          'y': round(experiment.reference_speed_interp[i], 2)})
+
+    return {'voltage_d': voltage_d,
             'voltage_q': voltage_q,
             'current_d': current_d,
             'current_q': current_q,
