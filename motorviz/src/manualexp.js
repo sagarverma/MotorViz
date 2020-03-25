@@ -18,6 +18,7 @@ class ManualExperiment extends React.Component {
     this.state = {
       plot: false,
       simulate: false,
+      metrics: false,
 
       ref_speed_inp: [],
       ref_speed_time_inp: [],
@@ -167,10 +168,13 @@ class ManualExperiment extends React.Component {
             simulate: true
           });
     }
-
+    computeMetrics = (event) => {
+      this.setState({metrics: true});
+    }
     render() {
       const plot = this.state.plot;
       const simulate = this.state.simulate;
+      const metrics = this.state.metrics;
       return (
         <div>
         <div class="row">
@@ -281,6 +285,15 @@ class ManualExperiment extends React.Component {
           }
           {simulate &&
             <button type="submit" class="btn btn-primary" onClick={this.computeMetrics}>Compute Metrics</button>}
+        </div>
+
+        <div>
+          {metrics && <Metrics torque={this.state.torque} speed={this.state.speed}
+                        reference_torque_interp={this.state.reference_torque_interp}
+                        reference_speed_interp={this.state.reference_speed_interp}
+                        time_domain={this.state.time_domain}
+                        speed_domain={this.state.speed_domain}
+                        torque_domain={this.state.torque_domain}/>}
         </div>
 
         </div>
