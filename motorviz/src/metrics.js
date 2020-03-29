@@ -9,6 +9,7 @@ class Metrics extends React.Component {
       perc2_times: [],
       perc95_times: [],
       following_errs: [],
+      following_times: [],
 
       torque: [],
       speed: [],
@@ -36,7 +37,8 @@ class Metrics extends React.Component {
       .then(data => this.setState({
           perc2_times: data.perc2_times,
           perc95_times: data.perc95_times,
-          following_errs: data.following_errs
+          following_errs: data.following_errs,
+          following_times: data.following_times
         })
       );
   }
@@ -56,9 +58,16 @@ class Metrics extends React.Component {
              legend_one="Reference" legend_two="Simulated"/>
         </div>
         <div class="col">
-          {this.state.perc2_times}
-          {this.state.perc95_times}
-          {this.state.following_errs}
+          <div class="row">
+            <h6>2&#37; response time 	&#58; <span class="label label-default">{this.state.perc2_times[0]}</span></h6>
+          </div>
+          <div class="row">
+            <h6>95&#37; response time &#58; <span class="label label-default">{this.state.perc95_times[0]}</span></h6>
+          </div>
+          <div class="row">
+            <h6>Following error &#58; <span class="label label-default">{this.state.following_errs[0]}</span>
+                &nbsp; at time &#58; <span class="label label-default">{this.state.following_times[0]}</span> </h6>
+          </div>
         </div>
         </div>
     )

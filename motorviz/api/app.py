@@ -248,6 +248,7 @@ def compute_metrics():
     perc2_times = []
     perc95_times = []
     following_errs = []
+    following_times = []
 
     for ramp_scope in ramp_scopes:
         sim_ramp_scope = get_ramp_from_sim_reference(sim_time, ramp_scope)
@@ -266,10 +267,12 @@ def compute_metrics():
 
         following_err, following_time = following_error(ref_speed_scope,
                                         sim_speed_scope, sim_time_scope)
-        following_errs.append([following_time, following_err])
+        following_errs.append(round(following_err,4))
+        following_times.append(following_time)
 
 
-
+    print (following_errs)
     return {'perc2_times': perc2_times,
             'perc95_times': perc95_times,
-            'following_errs': following_errs}
+            'following_errs': following_errs,
+            'following_times': following_times}
