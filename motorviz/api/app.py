@@ -15,7 +15,7 @@ from motormetrics.ee import *
 app = Flask(__name__)
 config = ExperimentConfig()
 simconfig = SimConfig()
-simconfig.set_config_from_json({'Data_Ts': 0.05})
+simconfig.set_config_from_json({'Data_Ts': 0.005})
 simulator = Py2Mat(simconfig)
 experiment = None
 

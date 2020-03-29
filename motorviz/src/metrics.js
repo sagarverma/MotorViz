@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {TwoQuantities} from './signal.js';
+import {MetricQuantities} from './signal.js';
 
 class Metrics extends React.Component {
   constructor(props) {
@@ -45,12 +45,13 @@ class Metrics extends React.Component {
     return (
         <table>
         <tr>
-        <td><TwoQuantities label_y="Speed (Hz)" label_x="Time (s)"
+        <td><MetricQuantities label_y="Speed (Hz)" label_x="Time (s)"
              domain_x={this.state.time_domain} domain_y={this.state.speed_domain}
              data_one={this.state.reference_speed_interp} data_two={this.state.speed}
+             perc2_times={this.state.perc2_times}
              legend_one="Reference" legend_two="Simulated"/>
         </td>
-        <td><TwoQuantities label_y="Torque (% Nominal)" label_x="Time (s)"
+        <td><MetricQuantities label_y="Torque (% Nominal)" label_x="Time (s)"
              domain_x={this.state.time_domain} domain_y={this.state.torque_domain}
              data_one={this.state.reference_torque_interp} data_two={this.state.torque}
              legend_one="Reference" legend_two="Simulated"/>
