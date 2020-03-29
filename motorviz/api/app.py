@@ -256,11 +256,19 @@ def compute_metrics():
         sim_speed_scope = sim_speed[sim_ramp_scope[1]: sim_ramp_scope[-1]]
         sim_time_scope = sim_time[sim_ramp_scope[1]: sim_ramp_scope[-1]]
 
-        perc2_times.append(response_time_2perc(ref_speed_scope,
-                            sim_speed_scope, sim_time_scope))
-        perc95_times.append(response_time_95perc(ref_speed_scope,
-                            sim_speed_scope, sim_time_scope))
-        following_errs.append(following_error(ref_speed_scope, sim_speed_scope))
+        perc2_time = response_time_2perc(ref_speed_scope,
+                            sim_speed_scope, sim_time_scope)
+        perc2_times.append(perc2_time)
+
+        perc95_time = response_time_95perc(ref_speed_scope,
+                            sim_speed_scope, sim_time_scope)
+        perc95_times.append(perc95_time)
+
+        following_err, following_time = following_error(ref_speed_scope,
+                                        sim_speed_scope, sim_time_scope)
+        following_errs.append([following_time, following_err])
+
+
 
     return {'perc2_times': perc2_times,
             'perc95_times': perc95_times,

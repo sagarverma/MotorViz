@@ -24,16 +24,18 @@ class Reference extends React.Component {
   }
   render() {
     return (
-      <table>
-        <tr>
-            <td><Quantity label_y="Speed (Hz)" label_x="Time (s)"
+        <div class="row">
+          <div class="col">
+              <Quantity label_y="Speed (Hz)" label_x="Time (s)"
                 domain_x={this.state.time_domain} domain_y={this.state.speed_domain}
-                data={this.state.speed}/></td>
-            <td><Quantity label_y="Torque (% Nominal)" label_x="Time (s)"
+                data={this.state.speed}/>
+          </div>
+          <div class="col">
+              <Quantity label_y="Torque (% Nominal)" label_x="Time (s)"
                  domain_x={this.state.time_domain} domain_y={this.state.torque_domain}
-                 data={this.state.torque}/></td>
-        </tr>
-      </table>
+                 data={this.state.torque}/>
+          </div>
+        </div>
     )
   }
 }
