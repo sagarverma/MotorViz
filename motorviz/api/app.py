@@ -249,30 +249,37 @@ def compute_metrics():
     perc95_times = []
     following_errs = []
     following_times = []
+    overshoot_errs = []
+    overshoot_times = []
 
     for ramp_scope in ramp_scopes:
         sim_ramp_scope = get_ramp_from_sim_reference(sim_time, ramp_scope)
-        print (sim_ramp_scope)
-        ref_speed_scope = ref_speed_interp[sim_ramp_scope[1]: sim_ramp_scope[-1]]
-        sim_speed_scope = sim_speed[sim_ramp_scope[1]: sim_ramp_scope[-1]]
-        sim_time_scope = sim_time[sim_ramp_scope[1]: sim_ramp_scope[-1]]
+        ref_speed_scope = ref_speed_interp[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1]
+        sim_speed_scope = sim_speed[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1]
+        sim_time_scope = sim_time[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1]
 
         perc2_time = response_time_2perc(ref_speed_scope,
                             sim_speed_scope, sim_time_scope)
-        perc2_times.append(perc2_time)
+        perc2_times.append(round(perc2_time, 5))
 
         perc95_time = response_time_95perc(ref_speed_scope,
                             sim_speed_scope, sim_time_scope)
-        perc95_times.append(perc95_time)
+        perc95_times.append(round(perc95_time, 5))
 
         following_err, following_time = following_error(ref_speed_scope,
                                         sim_speed_scope, sim_time_scope)
         following_errs.append(round(following_err,4))
-        following_times.append(following_time)
+        following_times.append(round(following_time, 5))
+
+        overshoot_err, overshoot_time = overshoot(ref_speed_scope,
+                                        sim_speed_scope, sim_time_scope)
+        overshoot_errs.append(round(overshoot_err,4))
+        overshoot_times.append(round(overshoot_time, 5))
 
 
-    print (following_errs)
     return {'perc2_times': perc2_times,
             'perc95_times': perc95_times,
             'following_errs': following_errs,
-            'following_times': following_times}
+            'following_times': following_times,
+            'overshoot_errs': overshoot_errs,
+            'overshoot_times': overshoot_times}

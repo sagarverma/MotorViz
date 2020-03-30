@@ -10,6 +10,8 @@ class Metrics extends React.Component {
       perc95_times: [],
       following_errs: [],
       following_times: [],
+      overshoot_errs: [],
+      overshoot_times: [],
 
       torque: [],
       speed: [],
@@ -38,7 +40,9 @@ class Metrics extends React.Component {
           perc2_times: data.perc2_times,
           perc95_times: data.perc95_times,
           following_errs: data.following_errs,
-          following_times: data.following_times
+          following_times: data.following_times,
+          overshoot_errs: data.overshoot_errs,
+          overshoot_times: data.overshoot_times
         })
       );
   }
@@ -59,14 +63,18 @@ class Metrics extends React.Component {
         </div>
         <div class="col">
           <div class="row">
-            <h6>2&#37; response time 	&#58; <span class="label label-default">{this.state.perc2_times[0]}</span></h6>
+            <h6>2&#37; response time 	&#58; <span class="label label-default">{this.state.perc2_times[0]}s</span></h6>
           </div>
           <div class="row">
-            <h6>95&#37; response time &#58; <span class="label label-default">{this.state.perc95_times[0]}</span></h6>
+            <h6>95&#37; response time &#58; <span class="label label-default">{this.state.perc95_times[0]}s</span></h6>
           </div>
           <div class="row">
             <h6>Following error &#58; <span class="label label-default">{this.state.following_errs[0]}</span>
-                &nbsp; at time &#58; <span class="label label-default">{this.state.following_times[0]}</span> </h6>
+                &nbsp; at time &#58; <span class="label label-default">{this.state.following_times[0]}s</span> </h6>
+          </div>
+          <div class="row">
+            <h6>Overshoot &#58; <span class="label label-default">{this.state.overshoot_errs[0]}</span>
+                &nbsp; at time &#58; <span class="label label-default">{this.state.overshoot_times[0]}s</span> </h6>
           </div>
         </div>
         </div>
