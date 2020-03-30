@@ -63,18 +63,18 @@ class Metrics extends React.Component {
         </div>
         <div class="col">
           <div class="row">
-            <h6>2&#37; response time 	&#58; <span class="label label-default">{this.state.perc2_times[0]}s</span></h6>
+            <h6>2&#37; response time 	&#58; <span class="label label-default">{this.state.perc2_times[1]}s</span></h6>
           </div>
           <div class="row">
-            <h6>95&#37; response time &#58; <span class="label label-default">{this.state.perc95_times[0]}s</span></h6>
+            <h6>95&#37; response time &#58; <span class="label label-default">{this.state.perc95_times[1]}s</span></h6>
           </div>
           <div class="row">
-            <h6>Following error &#58; <span class="label label-default">{this.state.following_errs[0]}</span>
-                &nbsp; at time &#58; <span class="label label-default">{this.state.following_times[0]}s</span> </h6>
+            <h6>Following error &#58; <span class="label label-default">{this.state.following_errs[1]}</span>
+                &nbsp; at time &#58; <span class="label label-default">{this.state.following_times[1]}s</span> </h6>
           </div>
           <div class="row">
-            <h6>Overshoot &#58; <span class="label label-default">{this.state.overshoot_errs[0]}</span>
-                &nbsp; at time &#58; <span class="label label-default">{this.state.overshoot_times[0]}s</span> </h6>
+            <h6>Overshoot &#58; <span class="label label-default">{this.state.overshoot_errs[1]}</span>
+                &nbsp; at time &#58; <span class="label label-default">{this.state.overshoot_times[1]}s</span> </h6>
           </div>
         </div>
         </div>

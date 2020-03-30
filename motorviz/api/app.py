@@ -15,7 +15,7 @@ from motormetrics.ee import *
 app = Flask(__name__)
 config = ExperimentConfig()
 simconfig = SimConfig()
-simconfig.set_config_from_json({'Data_Ts': 0.005})
+simconfig.set_config_from_json({'Data_Ts': 0.001})
 simulator = Py2Mat(simconfig)
 experiment = None
 
@@ -254,9 +254,9 @@ def compute_metrics():
 
     for ramp_scope in ramp_scopes:
         sim_ramp_scope = get_ramp_from_sim_reference(sim_time, ramp_scope)
-        ref_speed_scope = ref_speed_interp[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1]
-        sim_speed_scope = sim_speed[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1]
-        sim_time_scope = sim_time[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1]
+        ref_speed_scope = ref_speed_interp[sim_ramp_scope[1]: sim_ramp_scope[-1] + 1]
+        sim_speed_scope = sim_speed[sim_ramp_scope[1]: sim_ramp_scope[-1] + 1]
+        sim_time_scope = sim_time[sim_ramp_scope[1]: sim_ramp_scope[-1] + 1]
 
         perc2_time = response_time_2perc(ref_speed_scope,
                             sim_speed_scope, sim_time_scope)
@@ -271,8 +271,14 @@ def compute_metrics():
         following_errs.append(round(following_err,4))
         following_times.append(round(following_time, 5))
 
-        overshoot_err, overshoot_time = overshoot(ref_speed_scope,
-                                        sim_speed_scope, sim_time_scope)
+        ref_speed_scope = ref_speed_interp[sim_ramp_scope[2]: sim_ramp_scope[-1] + 1]
+        sim_speed_scope = sim_speed[sim_ramp_scope[2]: sim_ramp_scope[-1] + 1]
+        sim_time_scope = sim_time[sim_ramp_scope[2]: sim_ramp_scope[-1] + 1]
+        minn = min(ref_speed_interp[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1])
+        maxx = max(ref_speed_interp[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1])
+        overshoot_err, overshoot_time = overshoot(ref_speed_scope, sim_speed_scope,
+                                        minn, maxx, sim_time_scope)
+
         overshoot_errs.append(round(overshoot_err,4))
         overshoot_times.append(round(overshoot_time, 5))
 
