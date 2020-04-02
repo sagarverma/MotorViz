@@ -245,6 +245,7 @@ def compute_metrics():
 
     ramp_scopes = get_ramps_from_raw_reference(ref_speed, ref_speed_t)
 
+    ramp_start_times = []
     perc2_times = []
     perc95_times = []
     following_errs = []
@@ -254,9 +255,15 @@ def compute_metrics():
 
     for ramp_scope in ramp_scopes:
         sim_ramp_scope = get_ramp_from_sim_reference(sim_time, ramp_scope)
+
+        first_value = ref_speed_interp[sim_ramp_scope[0]]
+
         ref_speed_scope = ref_speed_interp[sim_ramp_scope[1]: sim_ramp_scope[-1] + 1]
         sim_speed_scope = sim_speed[sim_ramp_scope[1]: sim_ramp_scope[-1] + 1]
         sim_time_scope = sim_time[sim_ramp_scope[1]: sim_ramp_scope[-1] + 1]
+        ramp_start_times.append(sim_time[sim_ramp_scope[1]])
+
+        ref_speed_scope, sim_speed_scope = mirror(ref_speed_scope, sim_speed_scope, first_value)
 
         perc2_time = response_time_2perc(ref_speed_scope,
                             sim_speed_scope, sim_time_scope)
@@ -271,11 +278,15 @@ def compute_metrics():
         following_errs.append(round(following_err,4))
         following_times.append(round(following_time, 5))
 
+        minn = min(ref_speed_scope)
+        maxx = max(ref_speed_scope)
+
         ref_speed_scope = ref_speed_interp[sim_ramp_scope[2]: sim_ramp_scope[-1] + 1]
         sim_speed_scope = sim_speed[sim_ramp_scope[2]: sim_ramp_scope[-1] + 1]
         sim_time_scope = sim_time[sim_ramp_scope[2]: sim_ramp_scope[-1] + 1]
-        minn = min(ref_speed_interp[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1])
-        maxx = max(ref_speed_interp[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1])
+
+        ref_speed_scope, sim_speed_scope = mirror(ref_speed_scope, sim_speed_scope, first_value)
+
         overshoot_err, overshoot_time = overshoot(ref_speed_scope, sim_speed_scope,
                                         minn, maxx, sim_time_scope)
 
@@ -288,4 +299,5 @@ def compute_metrics():
             'following_errs': following_errs,
             'following_times': following_times,
             'overshoot_errs': overshoot_errs,
-            'overshoot_times': overshoot_times}
+            'overshoot_times': overshoot_times,
+            'ramp_start_times': ramp_start_times}

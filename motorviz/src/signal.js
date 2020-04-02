@@ -66,7 +66,7 @@ class TwoQuantities extends React.Component {
         }
     }
     static getDerivedStateFromProps(props, state) {
-      return {
+      let data = {
               label_x: props.label_x,
               label_y: props.label_y,
               domain_x: props.domain_x,
@@ -76,6 +76,7 @@ class TwoQuantities extends React.Component {
               legend_one: props.legend_one,
               legend_two: props.legend_two
             };
+      return data
     }
     getStyles() {
       const BLUE_COLOR = "#00a3de";

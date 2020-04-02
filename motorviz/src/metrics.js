@@ -42,12 +42,21 @@ class Metrics extends React.Component {
           following_errs: data.following_errs,
           following_times: data.following_times,
           overshoot_errs: data.overshoot_errs,
-          overshoot_times: data.overshoot_times
+          overshoot_times: data.overshoot_times,
+          ramp_start_times: data.ramp_start_times
         })
       );
   }
   render() {
-    let metrics = this.state.metrics;
+    let metrics = []
+
+    for (var i=0; i<this.state.perc2_times.length; i++){
+      metrics.push(<div class="row"><h6>2&#37; response time 	&#58; <span class="label label-default">{this.state.perc2_times[i]}s</span></h6></div>);
+      metrics.push(<div class="row"><h6>95&#37; response time &#58; <span class="label label-default">{this.state.perc95_times[i]}s</span></h6></div>);
+      metrics.push(<div class="row"><h6>Following error &#58; <span class="label label-default">{this.state.following_errs[i]} Hz </span>&nbsp; at time <span class="label label-default">{this.state.following_times[i]}s</span> </h6></div>);
+      metrics.push(<div class="row"><h6>Overshoot &#58; <span class="label label-default">{this.state.overshoot_errs[i]}</span> &#37; &nbsp; at time &#58; <span class="label label-default">{this.state.overshoot_times[i]}s</span> </h6></div>);
+      metrics.push(<div class="row"><h6></h6></div>);
+    }
     return (
         <div class="row">
         <div class="col">
@@ -62,20 +71,7 @@ class Metrics extends React.Component {
              legend_one="Reference" legend_two="Simulated"/>
         </div>
         <div class="col">
-          <div class="row">
-            <h6>2&#37; response time 	&#58; <span class="label label-default">{this.state.perc2_times[1]}s</span></h6>
-          </div>
-          <div class="row">
-            <h6>95&#37; response time &#58; <span class="label label-default">{this.state.perc95_times[1]}s</span></h6>
-          </div>
-          <div class="row">
-            <h6>Following error &#58; <span class="label label-default">{this.state.following_errs[1]}</span>
-                &nbsp; at time &#58; <span class="label label-default">{this.state.following_times[1]}s</span> </h6>
-          </div>
-          <div class="row">
-            <h6>Overshoot &#58; <span class="label label-default">{this.state.overshoot_errs[1]}</span>
-                &nbsp; at time &#58; <span class="label label-default">{this.state.overshoot_times[1]}s</span> </h6>
-          </div>
+          {metrics}
         </div>
         </div>
     )
