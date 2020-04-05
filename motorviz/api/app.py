@@ -252,6 +252,10 @@ def compute_metrics():
     following_times = []
     overshoot_errs = []
     overshoot_times = []
+    sse_errs = []
+    sse_times = []
+    max_trq_accs = []
+    max_trq_acc_times = []
 
     for ramp_scope in ramp_scopes:
         sim_ramp_scope = get_ramp_from_sim_reference(sim_time, ramp_scope)
@@ -285,7 +289,8 @@ def compute_metrics():
         sim_speed_scope = sim_speed[sim_ramp_scope[2]: sim_ramp_scope[-1] + 1]
         sim_time_scope = sim_time[sim_ramp_scope[2]: sim_ramp_scope[-1] + 1]
 
-        ref_speed_scope, sim_speed_scope = mirror(ref_speed_scope, sim_speed_scope, first_value)
+        ref_speed_scope, sim_speed_scope = mirror(ref_speed_scope, sim_speed_scope,
+                                                    first_value)
 
         overshoot_err, overshoot_time = overshoot(ref_speed_scope, sim_speed_scope,
                                         minn, maxx, sim_time_scope)
@@ -293,6 +298,20 @@ def compute_metrics():
         overshoot_errs.append(round(overshoot_err,4))
         overshoot_times.append(round(overshoot_time, 5))
 
+        sse_err, sse_time = steady_state_error(ref_speed_scope, sim_speed_scope,
+                                                minn, maxx, sim_time_scope)
+
+        sse_errs.append(round(sse_err, 4))
+        sse_times.append(round(sse_time, 5))
+
+        sim_torque_scope = sim_torque[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1]
+        sim_time_scope = sim_time[sim_ramp_scope[0]: sim_ramp_scope[-1] + 1]
+
+        max_trq_acc, max_trq_acc_time = max_torque_acceleration(sim_torque_scope,
+                                        sim_time_scope)
+
+        max_trq_accs.append(round(max_trq_acc, 4))
+        max_trq_acc_times.append(round(max_trq_acc_time, 5))
 
     return {'perc2_times': perc2_times,
             'perc95_times': perc95_times,
@@ -300,4 +319,8 @@ def compute_metrics():
             'following_times': following_times,
             'overshoot_errs': overshoot_errs,
             'overshoot_times': overshoot_times,
-            'ramp_start_times': ramp_start_times}
+            'ramp_start_times': ramp_start_times,
+            'sse_errs': sse_errs,
+            'sse_times': sse_times,
+            'max_trq_accs': max_trq_accs,
+            'max_trq_acc_times': max_trq_acc_times}
