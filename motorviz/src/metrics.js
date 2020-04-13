@@ -63,8 +63,8 @@ class Metrics extends React.Component {
       metrics.push(<div class="row"><h6>95&#37; response time &#58; <span class="label label-default">{this.state.perc95_times[i]}s</span></h6></div>);
       metrics.push(<div class="row"><h6>Following error &#58; <span class="label label-default">{this.state.following_errs[i]} Hz </span>&nbsp; at time <span class="label label-default">{this.state.following_times[i]}s</span> </h6></div>);
       metrics.push(<div class="row"><h6>Overshoot &#58; <span class="label label-default">{this.state.overshoot_errs[i]}</span> &#37; &nbsp; at time &#58; <span class="label label-default">{this.state.overshoot_times[i]}s</span> </h6></div>);
-      metrics.push(<div class="row"><h6>Steady state error &#58; <span class="label label-default">{this.state.sse_errs[i]}</span> &#37; &nbsp; at time &#58; <span class="label label-default">{this.state.sse_times[i]}s</span> </h6></div>);
-      metrics.push(<div class="row"><h6>Max torque acceleration &#58; <span class="label label-default">{this.state.max_trq_accs[i]}</span> Nm &nbsp; at time &#58; <span class="label label-default">{this.state.max_trq_acc_times[i]}s</span> </h6></div>);
+      metrics.push(<div class="row"><h6>Steady state error &#58; <span class="label label-default">{this.state.sse_errs[i]}</span> Hz &nbsp; at time &#58; <span class="label label-default">{this.state.sse_times[i]}s</span> </h6></div>);
+      metrics.push(<div class="row"><h6>Max torque acceleration &#58; <span class="label label-default">{this.state.max_trq_accs[i]}</span> &#37; of Nominal Torque &nbsp; at time &#58; <span class="label label-default">{this.state.max_trq_acc_times[i]}s</span> </h6></div>);
       metrics.push(<div class="row"><h6></h6></div>);
     }
     return (
