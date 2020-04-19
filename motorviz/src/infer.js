@@ -2,7 +2,7 @@ import React from 'react';
 
 import {ThreeQuantities} from './signal.js';
 
-class Metrics extends React.Component {
+class InferComputeMetrics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -128,4 +128,4 @@ class Metrics extends React.Component {
   }
 }
 
-export default Metrics;
+export default InferComputeMetrics;
