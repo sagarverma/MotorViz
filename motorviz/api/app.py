@@ -10,7 +10,8 @@ from motorrefgen.experiment import Experiment
 from motorsim.simconfig import SimConfig
 from motorsim.simulators.conn_python import Py2Mat
 
-from motormetrics.ee import *
+from motornn.utils.predict_utils import *
+
 
 app = Flask(__name__)
 config = ExperimentConfig()
@@ -230,3 +231,8 @@ def manual_simulate():
 def get_metrics():
     global experiment
     return compute_metrics(experiment)
+
+@app.route('/infer')
+def get_metrics():
+    global experiment
+    sim_ee_metrics = compute_metrics(experiment)
