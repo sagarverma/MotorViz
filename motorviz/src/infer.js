@@ -111,7 +111,7 @@ class InferComputeMetrics extends React.Component {
         <ThreeQuantities label_y="Speed (Hz)" label_x="Time (s)"
              domain_x={this.state.time_domain} domain_y={this.state.speed_domain}
              data_one={this.state.reference_speed_interp} data_two={this.state.speed}
-             data_three={this.stat.model_speed}
+             data_three={this.state.model_speed}
              legend_one="Reference" legend_two="Simulated" legend_three="Model"/>
         </div>
         <div class="col"><ThreeQuantities label_y="Torque (% Nominal)" label_x="Time (s)"

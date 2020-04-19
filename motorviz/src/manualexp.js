@@ -20,7 +20,7 @@ class ManualExperiment extends React.Component {
       plot: false,
       simulate: false,
       metrics: false,
-      infer: true,
+      infer: false,
 
       ref_speed_inp: [],
       ref_speed_time_inp: [],
